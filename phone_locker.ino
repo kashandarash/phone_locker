@@ -9,11 +9,11 @@ const int btnThree = 4;
 const int btnRun = 5;
 
 // 30 min.
-const unsigned long timeOne = 1800;
+const unsigned long timeOne = 18000;
 // 45 min.
-const unsigned long timeTwo = 2700;
+const unsigned long timeTwo = 27000;
 // 60 min.
-const unsigned long timeThree = 3600;
+const unsigned long timeThree = 36000;
 
 // Prevents a button press from registering multiple times in consecutive loop cycles.
 const unsigned long debounceDelay = 1000;
@@ -101,7 +101,7 @@ void setup()
 
   // Read saved time from EEPROM to restore locked state after power loss.
   EEPROM.get(eepromAddr, selectedTime);
-  if (selectedTime > 0)
+  if (selectedTime > 0 && selectedTime != 0xFFFFFFFF)
   {
     moveServoSmooth(servoLocked);
     startTime = millis();
@@ -148,7 +148,7 @@ void loop()
   }
 
   // Reset button pressed — start tracking hold duration and turn on blue LED.
-  if (digitalRead(reset) == HIGH && !resetHolding)
+  if (digitalRead(reset) == HIGH && !resetHolding && locked)
   {
     resetHolding = true;
     resetPressedAt = millis();
