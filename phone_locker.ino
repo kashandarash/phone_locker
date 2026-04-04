@@ -96,9 +96,6 @@ void setup()
 
   myServo.attach(servoPin);
 
-  // Assume worst-case position so smooth move always runs.
-  currentAngle = servoLocked;
-
   // Read saved time from EEPROM to restore locked state after power loss.
   EEPROM.get(eepromAddr, selectedTime);
   if (selectedTime > 0 && selectedTime != 0xFFFFFFFF)
@@ -179,7 +176,7 @@ void loop()
   {
     moveServoSmooth(servoUnlocked);
     // 500 Hz.
-    tone(buzzer, 500, 500);
+    tone(buzzer, 800, 500);
     locked = false;
     selectedTime = 0;
     // Clear EEPROM so device starts unlocked after next power on.
